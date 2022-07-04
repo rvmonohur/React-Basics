@@ -5,25 +5,9 @@ function getTitle(title) {
   return `app-title ${title}`;
 }
 
-// Lists in Reacts
-const list = [
-  {
-    title: "React",
-    url: "https://reactjs.org/",
-    author: "Jordan Walke",
-    num_comments: 3,
-    points: 4,
-    objectID: 0,
-  },
-  {
-    title: "Redux",
-    url: "https://redux.js.org/",
-    author: "Dan Abramov, Andrew Clark",
-    num_comments: 2,
-    points: 5,
-    objectID: 1,
-  },
-];
+function handleClick() {
+  console.log("button click...");
+}
 
 const title = "hacker-stories";
 
@@ -33,39 +17,69 @@ const welcome = {
   title: "React",
 };
 
-const App = () => (
-  <div>
-    <h1> My first react App {title} </h1>
+const App = () => {
+  // Lists in Reacts
+  const stories = [
+    {
+      title: "React",
+      url: "https://reactjs.org/",
+      author: "Jordan Walke",
+      num_comments: 3,
+      points: 4,
+      objectID: 0,
+    },
+    {
+      title: "Redux",
+      url: "https://redux.js.org/",
+      author: "Dan Abramov, Andrew Clark",
+      num_comments: 2,
+      points: 5,
+      objectID: 1,
+    },
+    {
+      title: "Router",
+      url: "https://reactrouter.com/",
+      author: "Remix",
+      num_comments: 10,
+      points: 50,
+      objectID: 2,
+    }
+  ];
 
-    {/* calling a function */}
-    <h3> {getTitle("react js fundamentals")} </h3>
-    <hr />
+  return (
+    <div>
+      <h1> My first react App {title} </h1>
 
-    {/* Lists in React  we return a JSX fragment that renders each item of the list: */}
-    <ul>
-      {list.map((item, index) => (
-        <li key={item.objectID}>
-          {" "}
-          {index} {item.title}{" "}
-        </li>
-      ))}
-    </ul>
+      {/* calling a function */}
+      <h3> {getTitle("react js fundamentals")} </h3>
+      <hr />
 
-    {/* Meet another React Component - Use PascalCase for React components*/}
-    {/* creating an instance of List component */}
-    <Search />
-    <ShowList />
-  </div>
-);
+      {/* Lists in React  we return a JSX fragment that renders each item of the stories: */}
+      <ul>
+        {stories.map((item, index) => (
+          <li key={item.objectID}>
+            {" "}
+            {index} {item.title}{" "}
+          </li>
+        ))}
+      </ul>
+
+      {/* Meet another React Component - Use PascalCase for React components*/}
+      {/* creating an instance of List component */}
+      <Search />
+      <ShowList list = {stories} />
+    </div>
+  );
+};
 
 // Meet another React Component - Use PascalCase for React components
 // definition of List component
-function ShowList() {
+function ShowList(props) {
   return (
     <div>
-      {/* Lists in React  we return a JSX fragment that renders each item of the list: */}
+      {/* Lists in React  we return a JSX fragment that renders each item of the stories: */}
       <ul>
-        {list.map((item, index) => (
+        {props.list.map((item, index) => (
           <li key={item.objectID}>
             {" "}
             {index} {item.title}{" "}
@@ -78,7 +92,7 @@ function ShowList() {
         attribute is a stable identifier.
       </p>
       <ul>
-        {list.map((item, index) => (
+        {props.list.map((item, index) => (
           <li key={index}>
             {" "}
             {index} {item.title}{" "}
@@ -86,7 +100,7 @@ function ShowList() {
         ))}
       </ul>
       <ul>
-        {list.map((item) => (
+        {props.list.map((item) => (
           <li key={item.objectID}>
             <span>
               <a href={item.url}> {item.title} </a>
@@ -97,9 +111,30 @@ function ShowList() {
           </li>
         ))}
       </ul>
+
+        {/* React Props to List's child component */}
+        {
+        props.list.map ((item) => (
+          <Item key = {item.objectID}   itemStory = {item} />
+        ))
+        }
+
     </div>
   );
 }
+
+
+const Item = (props) => (
+  <li>
+    <span>
+      <a href={props.itemStory.url}>{props.itemStory.title}</a>
+    </span>
+    <span>{props.itemStory.author}</span>
+    <span>{props.itemStory.num_comments}</span>
+    <span>{props.itemStory.points}</span>
+</li> 
+);
+
 
 const Search = () => {
   // Handler Function in JSX - do something in between
@@ -120,6 +155,12 @@ const Search = () => {
       {/* Input field and label combination */}
       <label htmlFor="search"> Search: </label>
       <input id="search" type="text" onChange={handleChange} />
+
+      {/* <button type="button" onClick = {handleClick()}> Event Handler </button> */}
+      <button type="button" onClick={handleClick}>
+        {" "}
+        Event Handler{" "}
+      </button>
     </div>
   );
 };
