@@ -78,7 +78,6 @@ event handler is only called once when rendering the component for the first tim
 By using so-called props in React, we can pass variables as information from one component to another component.
 
 Example, passing stories from App Compoent to its child, the Showlist Component
-**src/App.js:**
 
 ```
 const App = () => {
@@ -109,7 +108,43 @@ const Showlist = (props) => (
 `<List list = {stories} />`
 >list -> name [from ShowList we use prop.list]
 
+Example, perform the component extraction and pass each item along to the List component’s new child component:
+
+```
+{/* React Props to List's child component */}
+{
+props.list.map ((item) => (
+  <Item key = {item.objectID}   itemStory = {item} />
+))}
+
+
+const Item = (props) => (
+  <li>
+    <span>
+      <a href={props.itemStory.url}>{props.itemStory.title}</a>
+    </span>
+    <span>{props.itemStory.author}</span>
+    <span>{props.itemStory.num_comments}</span>
+    <span>{props.itemStory.points}</span>
+</li> 
+);
+```
+
+
+## 4. React State
+
+Whenever a user types something into an HTML input field, the user may want to see this typed information (state) displayed somewhere else in the application. 
+
+Therefore we need some way to change information over time and, what’s more important, to notify React to re-render its component(s) again.
+
+React’s useState function takes an initial state as an argument – where we will use an empty string. 
+
+By providing this initial state to useState, we are telling React that this state will change over time. 
+Furthermore, calling this function will return an array with two entries: The first entry (searchTerm) represents the current state; the second entry is a function to update this state (setSearchTerm). 
 
 
 
+## State vs Props
 
+Props are used to pass information down the component tree
+State is used to alter information over time.

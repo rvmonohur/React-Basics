@@ -1,4 +1,5 @@
 import "./App.css";
+import React, { useState } from 'react';
 
 // executing a function
 function getTitle(title) {
@@ -144,10 +145,14 @@ const Search = () => {
   //   console.log("event target value", event.target.value);
   // };
 
+  // let searchTerm = '';
+  const [searchTerm, setSearchTerm] = React.useState('');
+
   function handleChange(event) {
-    console.log("event", event);
-    console.log("event target ", event.target);
+
     console.log("event target value", event.target.value);
+    // searchTerm = event.target.value;
+    setSearchTerm(event.target.value);
   }
 
   return (
@@ -161,6 +166,14 @@ const Search = () => {
         {" "}
         Event Handler{" "}
       </button>
+
+      {/* React State
+      Whenever a user types something into an HTML input field, the user may want to see this typed information (state) displayed somewhere else in the application.
+      */}
+      <p>
+        Searching for <strong> {searchTerm} </strong>
+      </p>
+
     </div>
   );
 };
